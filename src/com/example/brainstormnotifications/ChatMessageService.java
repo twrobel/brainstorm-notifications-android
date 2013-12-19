@@ -32,7 +32,7 @@ import com.koushikdutta.async.http.socketio.StringCallback;
 public class ChatMessageService extends Service implements ErrorCallback, JSONCallback,
 		DisconnectCallback, StringCallback, EventCallback {
 	
-	static final String NOTIFICATIONS_SERVER = "http://tenrally-notifications-server.jit.su:80";
+	static final String NOTIFICATIONS_SERVER = "http://brainstorm3000-notifications-server.jit.su:80";
 	
 	public ChatMessageService() {
 	}
@@ -63,7 +63,7 @@ public class ChatMessageService extends Service implements ErrorCallback, JSONCa
 	        Log.d("MainActivity", "Event:" + event + "Arguments:" + argument.toString(2));
 			JSONObject message =  (JSONObject)argument.get(0);
 			Log.d("MainActivity", "Message:" + message.get("text") + " at " + convertUCTToEST((String)message.get("date")));
-			sendNotification((String)message.get("text"), convertUCTToEST((String)message.get("date")));
+			sendNotification((String)message.get("username"), (String)message.get("text"), convertUCTToEST((String)message.get("date")));
 	    } catch (JSONException e) {
 	        e.printStackTrace();
 	    }
@@ -113,12 +113,13 @@ public class ChatMessageService extends Service implements ErrorCallback, JSONCa
 		createSocketListener();
 	}
 
-	private void sendNotification(String message, String timestamp) {
+	private void sendNotification(String username, String message, String timestamp) {
+		String user = username != null ? username : "Anonymous";  
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
 			.setSmallIcon(R.drawable.ic_chat_message)
 			.setAutoCancel(true)
             .setLights(Color.YELLOW, 500, 500)
-			.setContentTitle("Message at " + timestamp)
+			.setContentTitle(user + " at " + timestamp)
 			.setContentText(message);
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		int notificationId = (int) System.currentTimeMillis();	
