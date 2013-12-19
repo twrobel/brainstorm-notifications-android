@@ -1,9 +1,0 @@
-# view AndroidManifest.xml #generated:27
--keep class com.example.brainstormnotifications.ChatMessageActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:29
--keep class com.example.brainstormnotifications.ChatMessageService { <init>(...); }
-
-# view AndroidManifest.xml #generated:18
--keep class com.example.brainstormnotifications.ServiceStartupActivity { <init>(...); }
-
